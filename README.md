@@ -6,7 +6,7 @@ This file is mostly intended for keeping some idea of the progress on making thi
 
 Overall
 -------
-* Needs to look nice (I need to learn to use mardown the proper way)
+* Needs to look nice (I need to learn to use markdown the proper way)
 
 Remote
 ------
