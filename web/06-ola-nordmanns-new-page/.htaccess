@@ -1,0 +1,4 @@
+<Files password.txt>
+	Order Allow,Deny
+	Deny from all
+</Files>
