@@ -11,13 +11,13 @@ Description
 -----------
 [Find the token!](https://10.75.1.12/)
 
-How to make
+You need
 -----------
 * Linux box
 * Our patch (TODO: Make it!)
 * An encrypted message (TODO: Exact commands to do this)
 
-How to exploit
+Solution
 ---------------
 * PROTIP: don't run stage1 unless you have a server set up to test against :) hb-progress.bin has been provided to give you the needed information to start from pt. 2
 
