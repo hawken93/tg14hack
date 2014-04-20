@@ -10,12 +10,12 @@ Overall
 
 Remote
 ------
-* Need some patches and maybe better explanations
+* Some content is missing if you want to reproduce the task
 
 Reverse Engineering
 -------------------
-* Add README.md to them and perhaps walkthroughs and whatnot that can be interesting
+* Add README.md with ways of solving, figuring out what they do, and the fastest way to solve the particular task.
 
 Web
 ---
-* Add explanations and observations
+* Add explanations, solutions and observations
