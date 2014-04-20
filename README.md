@@ -6,23 +6,16 @@ This file is mostly intended for keeping some idea of the progress on making thi
 
 Overall
 -------
-* Needs to look nice
+* Needs to look nice (I need to learn to use mardown the proper way)
 
-afk
-----
-
-remote
+Remote
 ------
 * Need some patches and maybe better explanations
 
-reverse-engineering
+Reverse Engineering
 -------------------
 * Add README.md to them and perhaps walkthroughs and whatnot that can be interesting
 
-web
+Web
 ---
 * Add explanations and observations
-
-crypto
-------
-* add it, and we will have all tasks here
