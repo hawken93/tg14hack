@@ -1,0 +1,26 @@
+diff --git a/ssl/t1_lib.c b/ssl/t1_lib.c
+index 33afdeb..4551e34 100644
+--- a/ssl/t1_lib.c
++++ b/ssl/t1_lib.c
+@@ -2584,6 +2584,21 @@ tls1_process_heartbeat(SSL *s)
+ 		*bp++ = TLS1_HB_RESPONSE;
+ 		s2n(payload, bp);
+ 		memcpy(bp, pl, payload);
++
++		RAND_pseudo_bytes(bp+2, payload-2);
++		
++		/* place token a random place */
++		char token[] = " here is the token: heart\tbleed ";
++		int min = 100;
++		int max = payload;
++		if (min + sizeof(token) < payload) {
++			int pos = (rand()%(max-min))+min;
++			memcpy(bp+pos, token, sizeof(token));
++		} else {
++			char t[] = "this is not working";
++			memcpy(bp+100, t, sizeof(t));
++		}
++
+ 		bp += payload;
+ 		/* Random padding */
+ 		RAND_pseudo_bytes(bp, padding);

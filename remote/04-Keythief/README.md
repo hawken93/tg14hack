@@ -14,7 +14,7 @@ Description
 You need
 -----------
 * Linux box
-* Our patch (TODO: Make it!)
+* Our patch
 * An encrypted message (TODO: Exact commands to do this)
 * Protip: run hb-search through pypy to speed up the search
 

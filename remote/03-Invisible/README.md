@@ -13,7 +13,7 @@ Description
 How to make
 -----------
 * Linux box
-* Our patch (TODO: Make it!)
+* Our patch
 
 How to exploit
 ---------------
