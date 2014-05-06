@@ -1,6 +1,11 @@
 TG 2014 hacking competition!
 ============================
 
+Tasks and solutions from the hacking compo at TG 2014
+Creds to: ifi.uio.no
+
+
+
 This file is mostly intended for keeping some idea of the progress on making this project complete.
 
 
