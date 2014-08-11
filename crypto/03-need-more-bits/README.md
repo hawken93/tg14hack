@@ -14,13 +14,13 @@ Solution
 --------
 * If you'd rather read code, rsa.py is for you.
 * First, crack the RSA. Here are the steps:
- * Factorize the modulus. (Online tools 3) The factors are called p and q. `p=5467663316330766641, q=7406781794978067433`
- * Compute the totient: `totient=(p-1)\*(q-1) = (5467663316330766641-1)\*(7406781794978067433-1) = 40497789112468128650058788750176068480`
+ * Factorize the modulus. (Online tools, yay!) The factors are called p and q. `p=5467663316330766641, q=7406781794978067433`
+ * Compute the totient: `totient=(p-1)*(q-1) = (5467663316330766641-1)*(7406781794978067433-1) = 40497789112468128650058788750176068480`
  * run [modular inverse](http://en.wikipedia.org/wiki/Modular_multiplicative_inverse) of your exponent, modulus the totient: `multinv(28806617666072351940591555263157654721, 40497789112468128650058788750176068480) = 18144556919192175292668077935484856001` see multinv.py (Note that arguments are reversed)
  * Congrats, your private key is the following: `Key(exponent=18144556919192175292668077935484856001L, modulus=40497789112468128662933233861484902553L)`
 * Second, decrypt the data.
- * Data is 112 bytes long, we factorize to get 7 \* 2^4. It makes sense if one block is 16 bytes and there are 7 of them.
- * The logarithm hint: (You can skip this the first time you read it)
+ * Data is 112 bytes long, we factorize to get 7 * 2^4. It makes sense if one block is 16 bytes and there are 7 of them.
+ * More explanation: (skippable)
     * The modulus is the number of unique values we can have per (huge) integer that we encrypt.
     * If we are interested in storing bytes, then we should find out how many bytes we can have and still be under our modulus
     * Turns out that:
@@ -34,7 +34,7 @@ Solution
  * `0x0b, 0x0b, 0x85, 0x72, 0x0c, 0x9d, 0x2e, 0x85, 0xb8, 0x8a, 0xf9, 0xc4, 0x7a, 0x94, 0xd3, 0x3e`
  * We will just treat this as a 128 bit MSB integer, and get `14681329815469611171265110655343317822`
    * (in python, `int("0b0b85720c9d2e85b88af9c47a95d33e", 16)` would reproduce this ^
- * Then we multipy by the private key exponent and apply our modulus
+ * Then we raise it to the private key exponent and apply our modulus
    * (python: `pow(14681329815469611171265110655343317822, 18144556919192175292668077935484856001, 40497789112468128662933233861484902553)` )
     * The reason this is fast, is because it uses [Modular exponentiation](http://en.wikipedia.org/wiki/Modular_exponentiation)
    * We get: `281441281418489127035953670741060713`
